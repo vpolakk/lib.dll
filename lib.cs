@@ -118,7 +118,9 @@ namespace ds.test.impl
                 get
                 {
                     int count = 0;
-                    foreach (Type t in typeof(APlugin).Assembly.GetExportedTypes())
+                    foreach (Type type in
+                        Assembly.GetAssembly(typeof(APlugin)).GetTypes()
+                        .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(APlugin))))
                     {
                         count++;
                     }
@@ -131,9 +133,11 @@ namespace ds.test.impl
                 get
                 {
                     List <string> names = new List<string>();
-                    foreach (Type t in typeof(APlugin).Assembly.GetExportedTypes())
+                    foreach (Type type in
+                        Assembly.GetAssembly(typeof(APlugin)).GetTypes()
+                        .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(APlugin))))
                     {
-                        names.Add(t.ToString());
+                        names.Add(type.ToString());
                     }
                     return names.ToArray();
                 }
